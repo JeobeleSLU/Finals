@@ -1,50 +1,41 @@
+import javax.swing.*;
 import java.util.Scanner;
 
 public class Main  {
+    static Program program;
     public static void main(String[] args) {
-        validateId(999);
-    }
-    public static void validateId(int id) {
-        String idString = String.valueOf(id);
-        if (idString.length() != 3 ){
-            System.out.println("invalid length, should be only 3 digits");
-            id = validateInt();
-            validateId(id);
-            return;
+        Scanner scanner = new Scanner(System.in);
+        program = new Program("Information Technology");
+        System.out.println("What do you want to add?");
+        getUserInput();
+        try {
+            program.close();
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null, System.err, "what the fuck are you doin?", JOptionPane.ERROR_MESSAGE);
         }
-        int firstDigit = Integer.parseInt(String.valueOf(idString.charAt(0)));
-        int secondDigit = Integer.parseInt(String.valueOf(idString.charAt(1)));
-        int thirdDigit = Integer.parseInt(String.valueOf(idString.charAt(2)));
-
-        //checks if the first and second digit have the range of 1-3
-        boolean isCorrectRange = (firstDigit > 0 && firstDigit < 5) &&
-                (secondDigit > 0 && secondDigit < 4) &&
-                (thirdDigit > 0 && thirdDigit < 4);
-
-            if (isCorrectRange) {
-                System.out.println("sekai desu!");
-                return;
-            }else
-                System.out.println("invalid ID!");
-                id = validateInt();
-            validateId(id);
-
 
     }
 
-    private static int validateInt() {
-        int number = 0;
-        while (true) {
-            Scanner scanner = new Scanner(System.in);
-            try {
-                number = Integer.parseInt(scanner.next());
-                return number;
+    private static void getUserInput() {
+        Scanner scanner = new Scanner(System.in);
 
-            } catch (NumberFormatException e) {
-                System.out.println("Enter valid input!");
-            }
+        int uChoice = program.validateInt();
+
+            if (uChoice == 1){
+                System.out.println("how many minor courses u want to add?");
+                int n = program.validateInt();
+                for (int i = 0; i < n; i++){
+                    program.addMinoCourse();
+                }
+            } else if (uChoice == 2 ) {
+                System.out.println("how many major courses u want to add?");
+                int n = program.validateInt();
+                for (int i = 0; i < n; i++) {
+                    program.addMinoCourse();
+                }
+            }else System.out.println("invalid input");
         }
-    }
-
-
 }
+
+
+
