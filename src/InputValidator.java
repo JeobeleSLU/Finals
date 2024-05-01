@@ -1,13 +1,14 @@
 import java.util.Scanner;
 
-public interface InputValidator {
+public interface InputValidator {// input validator inteface / contract
     Scanner scanner = new Scanner(System.in);
 
     default int validateInt() {
 
-        int number = 0;
+        int number ;
         while (true) {
             try {
+                scanner.next();
                 number = Integer.parseInt(scanner.next());
                 return number;
 
@@ -18,10 +19,11 @@ public interface InputValidator {
     }
     default double validateDouble() {
 
-        double number = 0;
+        double number;
         while (true) {
             try {
-                number = Integer.parseInt(scanner.next());
+                scanner.next();
+                number = Double.parseDouble(scanner.next());
                 return number;
 
             } catch (NumberFormatException e) {
@@ -31,10 +33,12 @@ public interface InputValidator {
     }
     default float validateFloat() {
 
-        float number = 0;
+        float number;
         while (true) {
             try {
-                number = Integer.parseInt(scanner.next());
+                scanner.next();
+
+                number = Float.parseFloat(scanner.next());
                 return number;
 
             } catch (NumberFormatException e) {
