@@ -31,6 +31,9 @@ public abstract class Course implements InputValidator,GradeCalculator, Serializ
     public void getResult(){
         isFinished = grade > 75;
     }
+    public boolean isFinished() {
+        return isFinished;
+    }
 
     public void setName(String name) {
         this.name = name;

@@ -1,7 +1,9 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Program implements Serializable, GradeCalculator {
     private static final long serialVersionUID = 123L;
@@ -14,7 +16,11 @@ public class Program implements Serializable, GradeCalculator {
         this.name = name;
         startRead();
     }
-
+    void getYearCourse(){
+        ArrayList<MajorCourses> yearCourses = (ArrayList<MajorCourses>) majorCourses.stream()
+                .sorted(Comparator.comparing(MajorCourses::getYear))
+                .collect(Collectors.toList());
+    }
     private void startRead() {
         InfoReader resources = new InfoReader();
         minorCourses.addAll(resources.getMinor());
@@ -80,6 +86,37 @@ public class Program implements Serializable, GradeCalculator {
     void print(){
         minorCourses.forEach(mi -> System.out.println(mi.getName()));
         majorCourses.forEach(ma -> System.out.println(ma.getName()));
+
+    }
+
+    public void addMajorCourse(String name, float units, float grade,int id) {
+        MajorCourses course = new MajorCourses();
+        course.setAllValues(name,units,grade,id);
+        majorCourses.add(course);
+    }
+    public void addMinorCourse(String name, float units, float grade) {
+        MinorCourses course = new MinorCourses();
+        course.setAllValues(name,units,grade);
+        minorCourses.add(course);
+    }
+    public ArrayList<Course> getAllCourses() {
+        ArrayList<Course> allCourses = new ArrayList<>();
+        allCourses.addAll(majorCourses);
+        allCourses.addAll(minorCourses);
+        return allCourses;
+    }
+
+    public ArrayList<MajorCourses> getMajorCourses() {
+        return majorCourses;
+    }
+
+    public ArrayList<MinorCourses> getMinorCourses() {
+        return minorCourses;
+    }
+
+    public void reset(){
+        majorCourses.removeAll(majorCourses);
+        minorCourses.removeAll(minorCourses);
 
     }
 }
