@@ -20,13 +20,13 @@ public class Program implements Serializable, GradeCalculator {
         ArrayList<MajorCourses> yearCourses = (ArrayList<MajorCourses>) majorCourses.stream()
                 .sorted(Comparator.comparing(MajorCourses::getYear))
                 .collect(Collectors.toList());
-    }
+    }//read all the courses from a file
     private void startRead() {
         InfoReader resources = new InfoReader();
         minorCourses.addAll(resources.getMinor());
         majorCourses.addAll(resources.getMajor());
     }
-
+    //for testing purposes
     void addMajorCourse() {
         MajorCourses courseToAdd = new MajorCourses();
         System.out.println("Enter the course name");
@@ -40,7 +40,7 @@ public class Program implements Serializable, GradeCalculator {
         courseToAdd.setAllValues(name, units, grade, id);
         majorCourses.add(courseToAdd);
     }
-
+    //for testing purposes
     void addMinorCourse() {
         MinorCourses courseToAdd = new MinorCourses();
         System.out.println("Enter the course name");
@@ -49,7 +49,9 @@ public class Program implements Serializable, GradeCalculator {
         float grade = validateFloat();
         System.out.println("Enter the units");
         float units = validateFloat();
-        courseToAdd.setAllValues(name, units, grade);
+        int year = validateInt();//create year validator
+        int sem = validateInt();// create sem validator
+        courseToAdd.setAllValues(name,year,sem,units, grade);
         minorCourses.add(courseToAdd);
     }
 
@@ -83,21 +85,22 @@ public class Program implements Serializable, GradeCalculator {
             e.printStackTrace();
         }
     }
-    void print(){
+    void print(){// for debugging
         minorCourses.forEach(mi -> System.out.println(mi.getName()));
         majorCourses.forEach(ma -> System.out.println(ma.getName()));
 
     }
 
+    //todo: Create functionality based on the JTextField input
+    public void addMinorCourse(String name, float units, float grade) {
+        MinorCourses course = new MinorCourses();
+        //course.setAllValues(name,units,grade);
+        minorCourses.add(course);
+    }
     public void addMajorCourse(String name, float units, float grade,int id) {
         MajorCourses course = new MajorCourses();
         course.setAllValues(name,units,grade,id);
         majorCourses.add(course);
-    }
-    public void addMinorCourse(String name, float units, float grade) {
-        MinorCourses course = new MinorCourses();
-        course.setAllValues(name,units,grade);
-        minorCourses.add(course);
     }
     public ArrayList<Course> getAllCourses() {
         ArrayList<Course> allCourses = new ArrayList<>();
@@ -105,7 +108,7 @@ public class Program implements Serializable, GradeCalculator {
         allCourses.addAll(minorCourses);
         return allCourses;
     }
-
+    //for debugging
     public ArrayList<MajorCourses> getMajorCourses() {
         return majorCourses;
     }
@@ -117,6 +120,6 @@ public class Program implements Serializable, GradeCalculator {
     public void reset(){
         majorCourses.removeAll(majorCourses);
         minorCourses.removeAll(minorCourses);
-
     }
+    //todo: Create an arraylist that has been filtered out using streams..
 }

@@ -2,20 +2,20 @@ import java.io.Serializable;
 
 public abstract class Course implements InputValidator,GradeCalculator, Serializable {
     private String name;
-
     private float units;
     private float grade;
     private int year;
     private float weightedGrade ;
     private boolean isFinished;
-
-    public Course(String name, float units, float grade) {
+    private int sem;
+    public Course(String name,int year,int sem, float units, float grade) {
         this.name = name;
         this.units = units;
         this.grade = grade;
         this.weightedGrade = calculateGrade(this) ;
         getResult();
     }
+
 
     public void setWeightedGrade(float weightedGrade) {
         this.weightedGrade = weightedGrade;
@@ -71,10 +71,17 @@ public abstract class Course implements InputValidator,GradeCalculator, Serializ
     public int getYear() {
         return year;
     }
-    public void setAllValues(String name, float units, float grade){
+
+    public void setSem(int sem) {
+        this.sem = sem;
+    }
+
+    public void setAllValues(String name, int year, int sem, float units, float grade){
         setName(name);
         setUnits(units);
         setGrade(grade);
+        setYear(year);
+        setSem(sem);
 
     }
 }
