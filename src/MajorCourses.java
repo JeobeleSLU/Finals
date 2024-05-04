@@ -1,13 +1,15 @@
-public class MajorCourses extends Course{
-    private int id ;
+public class MajorCourses extends Course {
+    private int id;
 
-    public MajorCourses(String name, float units, float grade, int id) {
-        super(name, units, grade);
+    public MajorCourses(String name, int year, int sem, float units, float grade, int id) {
+        super(name, year, sem, units, grade);
         this.id = id;
     }
-    public MajorCourses(){
+
+    public MajorCourses() {
         super();
     }
+
     public int getId() {
         return id;
     }
@@ -21,8 +23,9 @@ public class MajorCourses extends Course{
     }
 
     public void setYear() {
-       super.setYear(this.id/100);
+        super.setYear(this.id / 100);
     }
+
     public void validateId(int id) {//validate id checks if the digits of the course is ok
         String idString = String.valueOf(id);
         //checks the length of the string to avoid string index out of bounds when converting back to int
@@ -51,8 +54,10 @@ public class MajorCourses extends Course{
         validateId(id); //calls the method to recheck
     }
 
-    public void setAllValues(String name, float units, float grade,int id ) {
-        super.setAllValues(name, units, grade);
-        this.id = id;
-    }
+//    public void setAllValues(String name, float units, float grade,int id ) {
+//        super.setAllValues(name, units, grade);
+//        this.id = id;
+//    }
+//}
 }
+

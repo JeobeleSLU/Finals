@@ -37,7 +37,9 @@ public class Program implements Serializable, GradeCalculator {
         float units = validateFloat();
         System.out.println("Enter the id");
         int id = validateInt();
-        courseToAdd.setAllValues(name, units, grade, id);
+        int year = 0;
+        int sem = 0;
+        courseToAdd.setAllValues(name,year,sem, units, grade);
         majorCourses.add(courseToAdd);
     }
     //for testing purposes
@@ -97,9 +99,9 @@ public class Program implements Serializable, GradeCalculator {
         //course.setAllValues(name,units,grade);
         minorCourses.add(course);
     }
-    public void addMajorCourse(String name, float units, float grade,int id) {
+    public void addMajorCourse(String name,int year,int sem, float units, float grade,int id) {
         MajorCourses course = new MajorCourses();
-        course.setAllValues(name,units,grade,id);
+        course.setAllValues(name,year,sem,units,grade);
         majorCourses.add(course);
     }
     public ArrayList<Course> getAllCourses() {
