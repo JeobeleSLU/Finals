@@ -35,6 +35,12 @@ public  class Course implements InputValidator,GradeCalculator, Serializable {
         weightedGrade = 0;
         getResult();
     }
+
+    public int getSem() {
+        return sem;
+    }
+
+
     public void getResult(){
         isFinished = grade > 75;
     }

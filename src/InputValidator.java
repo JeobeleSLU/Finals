@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.util.Scanner;
 
-public interface InputValidator {// input validator inteface / contract
+public interface InputValidator {// input validator interface / contract
     Scanner scanner = new Scanner(System.in);
 
     default int validateInt() {

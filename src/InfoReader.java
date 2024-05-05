@@ -8,7 +8,7 @@ public class InfoReader {
 
     public InfoReader() {
         try {
-            course = readCourses("D:\\Finals\\src\\TemplateCourse");
+            course = readCourses("TemplateCourse");
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -76,15 +76,11 @@ public class InfoReader {
                line = scanner.nextLine();
                 String[] parts = line.split(",");
                 if (parts.length == 5) {
-                    for (int i = 0;  i < 5 ;i++){
-                        System.out.println(parts[i]);
-                    }
                     name = parts[0];
                     year = Integer.parseInt(parts[1]);
                     sem = Integer.parseInt(parts[2]);
                     units = Float.parseFloat(parts[3]);
                     grade = Float.parseFloat(parts[4]);
-                    System.out.println(" asd");
                     templateCourses.add(
                             new Course(name, year, sem, units, grade));
                 }

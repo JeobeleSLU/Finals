@@ -1,4 +1,10 @@
+import java.util.ArrayList;
+
 public class Student {
-    //di ko alam kung gagamitin to
+    public Student (Course course) {
+
+
+    }
+    ArrayList< Course> failedCourses = new ArrayList<>();
     String status;
 }
