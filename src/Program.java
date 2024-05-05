@@ -23,7 +23,7 @@ public class Program implements GradeCalculator,InputValidator {
 
     private void startRead() {
         InfoReader resources = new InfoReader();
-        courses.addAll(resources.getCourses());
+        courses.addAll(resources.getCourse());
     }
 //    for testing purposes
     void addCourses() {
@@ -47,7 +47,7 @@ public class Program implements GradeCalculator,InputValidator {
 
     public void close() {
         try{
-            FileOutputStream fileOutMajor = new FileOutputStream("Courses.ser");
+            FileOutputStream fileOutMajor = new FileOutputStream("UserCourses.ser");
              ObjectOutputStream objectOutCourses = new ObjectOutputStream(fileOutMajor);
             objectOutCourses.writeObject(courses);
 
@@ -57,11 +57,13 @@ public class Program implements GradeCalculator,InputValidator {
         }
     }
     void print(){// for debugging
-        courses.forEach(mi -> System.out.println(mi.getName()));
+        courses.forEach(c -> System.out.println(c.getName()));
+        courses.forEach(c -> System.out.println(c.getYear()));
 
     }
 
     //todo: Create functionality based on the JTextField input
+
 
     public void addCourses(String name, int year, int sem, float units, float grade) {
         Course course = new Course();
@@ -80,5 +82,6 @@ public class Program implements GradeCalculator,InputValidator {
         courses.removeAll(courses);
     }
     //todo: do sorting by grade, lexico
+
 
 }

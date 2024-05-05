@@ -1,5 +1,6 @@
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public  class Course implements InputValidator,GradeCalculator, Serializable {
     private String name;
@@ -89,6 +90,9 @@ public  class Course implements InputValidator,GradeCalculator, Serializable {
         setYear(year);
         setSem(sem);
 
+    }
+    public static void addCourse(ArrayList<Course> courses, String name, int year, int sem, float units, float grade) {
+        courses.add(new Course(name, year, sem, units, grade));
     }
 }
 

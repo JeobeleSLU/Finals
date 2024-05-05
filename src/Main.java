@@ -26,7 +26,7 @@ public class Main  {
                 System.out.println("how many minor courses u want to add?");
                 int n = program.validateInt();
                 for (int i = 0; i < n; i++){
-                    program.addMinorCourse();
+                    program.addCourses();
                 }
             } else if (uChoice == 2 ) {
                 System.out.println("how many major courses u want to add?");

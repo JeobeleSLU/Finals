@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.Scanner;
 
 public interface InputValidator {// input validator inteface / contract
@@ -46,4 +47,47 @@ public interface InputValidator {// input validator inteface / contract
             }
         }
     }
+    default float validateFloat(float number) {
+
+        try {
+            scanner.next();
+
+            number = Float.parseFloat(scanner.next());
+            return number;
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Please input a valid input","Invalid input",JOptionPane.ERROR);
+            return number = 0;
+        }
+    }
+    default double validateDouble(double number) {
+
+        try {
+            scanner.next();
+
+            number = Float.parseFloat(scanner.next());
+            return number;
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Please input a valid input","Invalid input",JOptionPane.ERROR);
+            return number = 0;
+        }
+    }
+    default double validateInt(double number) {
+
+        try {
+            scanner.next();
+
+            number = Integer.parseInt(scanner.next());
+            return number;
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Please input a valid input","Invalid input",JOptionPane.ERROR);
+            return number = 0;
+        }
+    }
 }
+
