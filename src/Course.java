@@ -7,11 +7,11 @@ public  class Course implements InputValidator,GradeCalculator, Serializable {
     private float units;
     private float grade;
     private int year;
-    private float weightedGrade ;
-    private boolean isFinished;
+    private float weightedGrade;
+    private boolean hasPassed;
     private int sem;
     @Serial
-    private static final long serialVersionUID = 123L;
+    private static final long serialVersionUID = 1L;
 
     public Course(String name,int year,int sem, float units, float grade) {
         this.name = name;
@@ -42,10 +42,11 @@ public  class Course implements InputValidator,GradeCalculator, Serializable {
 
 
     public void getResult(){
-        isFinished = grade > 75;
+        hasPassed = grade > 75;
     }
-    public boolean isFinished() {
-        return isFinished;
+    public boolean hasPassed() {
+        return !(getGrade() > 75);
+
     }
 
     public void setName(String name) {
@@ -59,10 +60,13 @@ public  class Course implements InputValidator,GradeCalculator, Serializable {
 
     public void setGrade(float grade) {
         this.grade = grade;
-        calculateGrade(this);
+        this.weightedGrade = calculateGrade(this);
         getResult();
     }
 
+    public float getWeightedGrade() {
+        return weightedGrade;
+    }
 
     public String getName() {
         return name;
@@ -76,6 +80,13 @@ public  class Course implements InputValidator,GradeCalculator, Serializable {
     public float getGrade() {
         return grade;
     }
+
+
+    // Calculate the weighted grade
+    public void calculateWeightedGrade() {
+        this.weightedGrade = calculateGrade(this);
+    }
+
 
     public void setYear(int year) {
         this.year = year;

@@ -8,7 +8,7 @@ public class Program implements GradeCalculator,InputValidator {
     private String name;
     private ArrayList<Course> courses = new ArrayList<>();
     private ArrayList<Course> firstSemFirstYear = new ArrayList<>();
-
+    private Student student = new Student();
     Scanner scanner = new Scanner(System.in);
 
     public void setName(String name) {
@@ -22,7 +22,6 @@ public class Program implements GradeCalculator,InputValidator {
     public Program(String name) {
         this.name = name;
         startRead();
-        firstSemFirstYear = firstYear();
         firstSemFirstYear = sortName(firstSemFirstYear);
     }
 
@@ -38,6 +37,9 @@ public class Program implements GradeCalculator,InputValidator {
         String name = scanner.next();
         System.out.println("Enter the course grade");
         float grade = validateFloat();
+        if (courseToAdd.hasPassed()){
+            student.addFailedCourse(courseToAdd);
+        }
         System.out.println("Enter the units");
         float units = validateFloat();
         System.out.println("Enter the id");
@@ -49,34 +51,23 @@ public class Program implements GradeCalculator,InputValidator {
         courses.add(courseToAdd);
     }
 
+    public ArrayList<Course> getFilteredYearSem(int yearToGet, int semToGet) {// for debugging
+        ArrayList<Course> filteredArray = (ArrayList<Course>) courses.stream()
+                .filter(c -> c.getYear() == yearToGet)
+                .filter(c -> c.getSem() == semToGet)
+                .collect(Collectors.toList());
 
-    public void close() {
-        try {
-            FileOutputStream fileOutMajor = new FileOutputStream("UserCourses.ser");
-            ObjectOutputStream objectOutCourses = new ObjectOutputStream(fileOutMajor);
-            objectOutCourses.writeObject(courses);
-
-            System.out.println("info saved!");
-        } catch (IOException e) {
-            e.printStackTrace();
+        filteredArray.forEach(course -> System.out.println(course.getName()));
+        return filteredArray;
+    }
+    public void updateValues() {
+        for (Course course : courses) {
+            // Update the values of each course
+            // For example, if you need to recalculate the weighted grade:
+            course.getResult(); // Update the result based on the new grade
         }
     }
 
-    //    void getYearCourse(){//
-//        ArrayList<Course> yearCourses = (ArrayList<Course>) courses.stream()
-////                .sorted(Comparator.comparing( Course::getYear))
-////                .collect(Collectors.toList());
-////    }
-    public ArrayList<Course> firstYear() {// for debugging
-        ArrayList<Course> semFirst = (ArrayList<Course>) courses.stream()
-                .filter(c -> c.getYear() == 1)
-                .filter(c -> c.getSem() == 1)
-                .collect(Collectors.toList());
-
-        semFirst.forEach(course -> System.out.println(course.getName()));
-        return semFirst;
-
-    }
 
 
     //todo: Create functionality based on the JTextField input
@@ -86,6 +77,18 @@ public class Program implements GradeCalculator,InputValidator {
         Course course = new Course();
         course.setAllValues(name, year, sem, units, grade);
         courses.add(course);
+    }
+    public void updateCourseGrade(Course updatedCourse) {
+        // Find the corresponding course in the list and update its grade
+        for (Course course : courses) {
+            if (course.equals(updatedCourse)) {
+                course.setGrade(updatedCourse.getGrade());
+                // Recalculate the weighted grade and pass status
+                course.calculateWeightedGrade();
+                course.getResult();
+                break;
+            }
+        }
     }
 
     //for debugging
@@ -122,5 +125,16 @@ public class Program implements GradeCalculator,InputValidator {
             sortFirst.forEach(course -> System.out.println(course.getGrade()));
             return sortFirst;
         }
+    public void close() {
+        try {
+            FileOutputStream fileOutMajor = new FileOutputStream("UserCourses.ser");
+            ObjectOutputStream objectOutCourses = new ObjectOutputStream(fileOutMajor);
+            objectOutCourses.writeObject(courses);
+
+            System.out.println("info saved!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

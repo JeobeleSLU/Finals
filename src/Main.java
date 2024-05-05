@@ -8,7 +8,6 @@ public class Main  {
         program = new Program("Information Technology");
         System.out.println("What do you want to add?");
         getUserInput();
-        program.firstYear();
         try {
             program.close();
         }catch (Exception e){
