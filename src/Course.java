@@ -1,6 +1,7 @@
+import java.io.Serial;
 import java.io.Serializable;
 
-public abstract class Course implements InputValidator,GradeCalculator, Serializable {
+public  class Course implements InputValidator,GradeCalculator, Serializable {
     private String name;
     private float units;
     private float grade;
@@ -8,8 +9,13 @@ public abstract class Course implements InputValidator,GradeCalculator, Serializ
     private float weightedGrade ;
     private boolean isFinished;
     private int sem;
+    @Serial
+    private static final long serialVersionUID = 123L;
+
     public Course(String name,int year,int sem, float units, float grade) {
         this.name = name;
+        this.year = year;
+        this.sem = sem;
         this.units = units;
         this.grade = grade;
         this.weightedGrade = calculateGrade(this) ;

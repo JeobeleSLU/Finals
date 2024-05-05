@@ -32,7 +32,7 @@ public class Main  {
                 System.out.println("how many major courses u want to add?");
                 int n = program.validateInt();
                 for (int i = 0; i < n; i++) {
-                    program.addMajorCourse();
+                    program.addCourses();
                 }
             }else System.out.println("invalid input");
         }

@@ -2,21 +2,17 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class InfoReader {
-    private final ArrayList<MajorCourses> major;
-    private final ArrayList<MinorCourses> minor;// initializes the arralist
+    private final ArrayList<Course> courses;
 
     public InfoReader() {
-        major = readCourses("MajorCourses.ser");
-        minor = readCourses("MinorCourses.ser");
+        courses = readCourses("Courses.ser");
     }
 
-    public ArrayList<MajorCourses> getMajor() {
-        return major;
+    public ArrayList<Course> getCourses() {
+        return courses;
     }
 
-    public ArrayList<MinorCourses> getMinor() {
-        return minor;
-    }
+
 
     //uses the course reader
     private ArrayList readCourses(String fileName) {
