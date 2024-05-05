@@ -68,17 +68,22 @@ public class InfoReader {
             Scanner scanner = new Scanner(file);
             String line;
            while (scanner.hasNextLine()) {
+               String name= "";
+               int year = 0;
+               int sem = 0;
+               float units = 0;
+               float grade =0;
                line = scanner.nextLine();
                 String[] parts = line.split(",");
                 if (parts.length == 5) {
-                    String name= "";
-                    int year = 0;
-                    int sem = 0;
-                    float units = 0;
-                    float grade =0;
                     for (int i = 0;  i < 5 ;i++){
                         System.out.println(parts[i]);
                     }
+                    name = parts[0];
+                    year = Integer.parseInt(parts[1]);
+                    sem = Integer.parseInt(parts[2]);
+                    units = Float.parseFloat(parts[3]);
+                    grade = Float.parseFloat(parts[4]);
                     System.out.println(" asd");
                     templateCourses.add(
                             new Course(name, year, sem, units, grade));
@@ -86,12 +91,13 @@ public class InfoReader {
             }
         }catch (IOException e){
             System.out.println(templateCourses);
+            course = templateCourses;
 
             return templateCourses;
         }
         templateCourses.forEach(c-> System.out.println(c.getName()));
         //System.out.println(templateCourses);
-
+        course = templateCourses;
         return templateCourses;
     }
 }
