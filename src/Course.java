@@ -72,7 +72,7 @@ public  class Course implements InputValidator,GradeCalculator, Serializable {
     public void setUnits(float units) {
         this.units = units;
     }
-        
+
     public void setGrade(float grade) {
         this.grade = grade;
         this.weightedGrade = calculateGrade(this);

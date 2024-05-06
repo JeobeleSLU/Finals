@@ -98,6 +98,21 @@ public class Program implements GradeCalculator,InputValidator {
                    course.recheckAllValues();
                 });
     }
+    public void updateCourse(Course updatedCourse) {
+        // Find the corresponding course in the list and update its grade
+        courses.stream()
+                .filter(course -> course.getName().equals(updatedCourse.getName()))
+                .findFirst()
+                .ifPresent(course -> {
+                    course.setName(updatedCourse.getName());
+                    course.setSem(updatedCourse.getSem());
+                    course.setYear(updatedCourse.getYear());
+                    course.setUnits(updatedCourse.getUnits());
+                    course.setGrade(updatedCourse.getGrade());
+                    // Recalculate the weighted grade and pass status
+                    course.recheckAllValues();
+                });
+    }
 
 
     //for debugging
@@ -134,10 +149,12 @@ public class Program implements GradeCalculator,InputValidator {
         return sortFirst;
     }
 
+    // method for calculating average weighted grade
     public ArrayList<Course> getWeightedAverages() {
         int totalWeightedGrade = 0;
         int totalUnits = 0;
         ArrayList<Course> tempCourse = new ArrayList<>();
+        // loop to find the year and semester to be calculated
         for (int year = 1; year <= 4; year++) {
             for (int semester = 1; semester <= 3; semester++) {
                 tempCourse = getFilteredYearSem(year, semester);
@@ -169,6 +186,9 @@ public class Program implements GradeCalculator,InputValidator {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public ArrayList<Course> getAllCourses(){
+        return courses;
     }
 
 }

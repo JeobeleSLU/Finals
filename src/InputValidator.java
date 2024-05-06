@@ -65,7 +65,7 @@ public interface InputValidator {// input validator interface / contract
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null,
-                    "Please input a valid input","Invalid input",JOptionPane.ERROR);
+                    "Please input a valid input","Invalid input",1);
             return number = 0;
         }
     }
@@ -79,7 +79,7 @@ public interface InputValidator {// input validator interface / contract
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null,
-                    "Please input a valid input","Invalid input",JOptionPane.ERROR);
+                    "Please input a valid input","Invalid input",1);
             return number = 0;
         }
     }
@@ -93,7 +93,7 @@ public interface InputValidator {// input validator interface / contract
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null,
-                    "Please input a valid input","Invalid input",JOptionPane.ERROR);
+                    "Please input a valid input","Invalid input",1);
             return number = 0;
         }
     }

@@ -82,12 +82,10 @@ public class InfoReader {
                 }
             }
         }catch (IOException e){
-            System.out.println(templateCourses);
             course = templateCourses;
 
             return templateCourses;
         }
-        templateCourses.forEach(c-> System.out.println(c.getName()));
         course = templateCourses;
         return templateCourses;
     }
