@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 public class Program implements GradeCalculator,InputValidator {
     private String name;
     private ArrayList<Course> courses = new ArrayList<>();
-    private ArrayList<Course> firstSemFirstYear = new ArrayList<>();
     private Student student = new Student();
     Scanner scanner = new Scanner(System.in);
+    InfoReader resources;
 
     public void setName(String name) {
         this.name = name;
@@ -22,22 +22,23 @@ public class Program implements GradeCalculator,InputValidator {
     public Program(String name) {
         this.name = name;
         startRead();
-        firstSemFirstYear = sortName(firstSemFirstYear);
     }
 
     private void startRead() {
-        InfoReader resources = new InfoReader();
+        resources = new InfoReader();
         courses.addAll(resources.getCourse());
     }
 
     //    for testing purposes
     void addCourses() {
         Course courseToAdd = new Course();
+        System.out.println("Enter the course number");
+        String courseNo = scanner.next();
         System.out.println("Enter the course name");
         String name = scanner.next();
         System.out.println("Enter the course grade");
         float grade = validateFloat();
-        if (courseToAdd.hasPassed()){
+        if (courseToAdd.hasPassed()) {
             student.addFailedCourse(courseToAdd);
         }
         System.out.println("Enter the units");
@@ -47,11 +48,18 @@ public class Program implements GradeCalculator,InputValidator {
         int year = validateInt();
         System.out.println("enter Sem");
         int sem = validateInt();
-        courseToAdd.setAllValues(name, year, sem, units, grade);
+        courseToAdd.setAllValues(courseNo, name, year, sem, units, grade);
+        courses.add(courseToAdd);
+
+    }
+    //use this for JTextField input
+    void addCourse(String courseNo, String name, int year, int sem,float unit,float grade){
+        Course courseToAdd = new Course();
         courses.add(courseToAdd);
     }
 
-    public ArrayList<Course> getFilteredYearSem(int yearToGet, int semToGet) {// for debugging
+    //filter by year and sem
+    public ArrayList<Course> getFilteredYearSem(int yearToGet, int semToGet) {
         ArrayList<Course> filteredArray = (ArrayList<Course>) courses.stream()
                 .filter(c -> c.getYear() == yearToGet)
                 .filter(c -> c.getSem() == semToGet)
@@ -60,6 +68,7 @@ public class Program implements GradeCalculator,InputValidator {
         filteredArray.forEach(course -> System.out.println(course.getName()));
         return filteredArray;
     }
+
     public void updateValues() {
         for (Course course : courses) {
             // Update the values of each course
@@ -69,40 +78,38 @@ public class Program implements GradeCalculator,InputValidator {
     }
 
 
-
     //todo: Create functionality based on the JTextField input
 
 
-    public void addCourses(String name, int year, int sem, float units, float grade) {
+    public void addCourses(String courseNo, String name, int year, int sem, float units, float grade) {
         Course course = new Course();
-        course.setAllValues(name, year, sem, units, grade);
+        course.setAllValues(courseNo, name, year, sem, units, grade);
         courses.add(course);
     }
+
     public void updateCourseGrade(Course updatedCourse) {
         // Find the corresponding course in the list and update its grade
-        for (Course course : courses) {
-            if (course.equals(updatedCourse)) {
-                course.setGrade(updatedCourse.getGrade());
-                // Recalculate the weighted grade and pass status
-                course.calculateWeightedGrade();
-                course.getResult();
-                break;
-            }
-        }
+        courses.stream()
+                 .filter(course -> course.getName().equals(updatedCourse.getName()))
+                .findFirst()
+                .ifPresent(course -> {
+                    course.setGrade(updatedCourse.getGrade());
+                    // Recalculate the weighted grade and pass status
+                   course.recheckAllValues();
+                });
     }
+
 
     //for debugging
     public ArrayList<Course> getCourses() {
         return courses;
     }
 
-    public ArrayList<Course> getFirstSemFirstYear() {
-        return firstSemFirstYear;
-    }
+
 
 
     public void reset() {
-        courses.removeAll(courses);
+        resources.delUserCourses();
     }
 
     //todo: do sorting by grade, lexico
@@ -116,16 +123,43 @@ public class Program implements GradeCalculator,InputValidator {
         sortFirst.forEach(course -> System.out.println(course.getName()));
         return sortFirst;
     }
-    //sorting grade from highest to lowest
-        public ArrayList<Course> sortGrade (ArrayList<Course> sortedGrade) {
-            ArrayList<Course> sortFirst = (ArrayList<Course>) sortedGrade.stream()
-                    .sorted(Comparator.comparing(Course::getGrade).reversed())
-                    .collect(Collectors.toList());
 
-            sortFirst.forEach(course -> System.out.println(course.getGrade()));
-            return sortFirst;
+    //sorting grade from highest to lowest
+    public ArrayList<Course> sortGrade(ArrayList<Course> sortedGrade) {
+        ArrayList<Course> sortFirst = (ArrayList<Course>) sortedGrade.stream()
+                .sorted(Comparator.comparing(Course::getGrade).reversed())
+                .collect(Collectors.toList());
+
+        sortFirst.forEach(course -> System.out.println(course.getGrade()));
+        return sortFirst;
+    }
+
+    public ArrayList<Course> getWeightedAverages() {
+        int totalWeightedGrade = 0;
+        int totalUnits = 0;
+        ArrayList<Course> tempCourse = new ArrayList<>();
+        for (int year = 1; year <= 4; year++) {
+            for (int semester = 1; semester <= 3; semester++) {
+                tempCourse = getFilteredYearSem(year, semester);
+                tempCourse.addAll(tempCourse);
+            }
+            for (Course course : tempCourse) {
+                totalWeightedGrade += course.getGrade() * course.getUnits();
+                totalUnits += course.getUnits();
+            }
+            float weightedAverage = totalWeightedGrade / totalUnits;
+
+            // Set the weighted average for each course
+            for (Course course : tempCourse) {
+                course.setWeightedGrade(weightedAverage);
+            }
+
+            return tempCourse;
         }
-    public void close() {
+        return tempCourse;
+    }
+
+        public void close() {
         try {
             FileOutputStream fileOutMajor = new FileOutputStream("UserCourses.ser");
             ObjectOutputStream objectOutCourses = new ObjectOutputStream(fileOutMajor);

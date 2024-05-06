@@ -47,6 +47,14 @@ public interface InputValidator {// input validator interface / contract
             }
         }
     }
+    default int forceInt(String number){
+        try{
+            return Integer.parseInt(number);
+        }catch (NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "Please input a valid input","Invalid input", JOptionPane.WARNING_MESSAGE);
+            return 0;
+        }
+    }
     default float validateFloat(float number) {
 
         try {

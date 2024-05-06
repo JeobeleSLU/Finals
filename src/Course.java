@@ -3,6 +3,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public  class Course implements InputValidator,GradeCalculator, Serializable {
+    private String courseNo;
     private String name;
     private float units;
     private float grade;
@@ -13,7 +14,8 @@ public  class Course implements InputValidator,GradeCalculator, Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    public Course(String name,int year,int sem, float units, float grade) {
+    public Course(String courseNo, String name,int year,int sem, float units, float grade) {
+        this.courseNo = courseNo;
         this.name = name;
         this.year = year;
         this.sem = sem;
@@ -21,6 +23,15 @@ public  class Course implements InputValidator,GradeCalculator, Serializable {
         this.grade = grade;
         this.weightedGrade = calculateGrade(this) ;
         getResult();
+        setMaximumGrade();
+    }
+
+    public void setMaximumGrade() {
+        if (this.grade > 99){
+            this.grade=99;
+        }else if (this.grade <65){
+            this.grade = 65;
+        }
     }
 
 
@@ -29,11 +40,13 @@ public  class Course implements InputValidator,GradeCalculator, Serializable {
     }
 
     public Course(){
+        courseNo = "";
         name ="";
         units = 0.0f;
         grade = 0.0f;
         weightedGrade = 0;
         getResult();
+        setMaximumGrade();
     }
 
     public int getSem() {
@@ -87,6 +100,13 @@ public  class Course implements InputValidator,GradeCalculator, Serializable {
         this.weightedGrade = calculateGrade(this);
     }
 
+    public void setCourseNo(String courseNo) {
+        this.courseNo = courseNo;
+    }
+
+    public String getCourseNo() {
+        return courseNo;
+    }
 
     public void setYear(int year) {
         this.year = year;
@@ -100,16 +120,24 @@ public  class Course implements InputValidator,GradeCalculator, Serializable {
         this.sem = sem;
     }
 
-    public void setAllValues(String name, int year, int sem, float units, float grade){
+    public void setAllValues(String courseNo, String name, int year, int sem, float units, float grade){
+        setCourseNo(courseNo);
         setName(name);
         setUnits(units);
         setGrade(grade);
         setYear(year);
         setSem(sem);
+        setMaximumGrade();
+
 
     }
-    public static void addCourse(ArrayList<Course> courses, String name, int year, int sem, float units, float grade) {
-        courses.add(new Course(name, year, sem, units, grade));
+    void recheckAllValues (){
+        setMaximumGrade();
+        getResult();
+    }
+    public static void addCourse(ArrayList<Course> courses,String courseNo, String name, int year, int sem, float units, float grade) {
+        courses.add(new Course(courseNo,name, year, sem, units, grade));
+
     }
 }
 

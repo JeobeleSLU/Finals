@@ -9,6 +9,7 @@ public class Student {
         this.course = null;
         this.fCourse = null;
     }
+
     public Student(String name, Course course, Course fCourse) {
         this.name = name;
         this.course = course;
@@ -38,7 +39,6 @@ public class Student {
     public Course getfCourse() {
         return fCourse;
     }
-
 
     ArrayList< Course> failedCourses = new ArrayList<>();
     String status;
