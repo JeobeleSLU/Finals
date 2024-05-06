@@ -22,6 +22,7 @@ public  class Course implements InputValidator,GradeCalculator, Serializable {
         this.units = units;
         this.grade = grade;
         this.weightedGrade = calculateGrade(this) ;
+        hasPassed=false;
         getResult();
         setMaximumGrade();
     }
@@ -45,6 +46,7 @@ public  class Course implements InputValidator,GradeCalculator, Serializable {
         units = 0.0f;
         grade = 0.0f;
         weightedGrade = 0;
+        hasPassed= false;
         getResult();
         setMaximumGrade();
     }
@@ -58,7 +60,7 @@ public  class Course implements InputValidator,GradeCalculator, Serializable {
         hasPassed = grade > 75;
     }
     public boolean hasPassed() {
-        return !(getGrade() > 75);
+        return (getGrade() > 75);
 
     }
 
@@ -70,7 +72,7 @@ public  class Course implements InputValidator,GradeCalculator, Serializable {
     public void setUnits(float units) {
         this.units = units;
     }
-
+        
     public void setGrade(float grade) {
         this.grade = grade;
         this.weightedGrade = calculateGrade(this);
